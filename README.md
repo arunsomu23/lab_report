@@ -35,11 +35,14 @@ cd lab-report
 2. Install dependencies
 npm install
 
-3. Run the development server
+3. Add Environment Variable
+NEXT_PUBLIC_FHIR_DR_URL = https://build.fhir.org/diagnosticreport-example.json
+
+4. Run the development server
 npm run dev
 Open http://localhost:3000 in your browser.
 
-4. Credentials to login
+5. Credentials to login
 username : admin
 password : admin123
 

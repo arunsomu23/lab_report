@@ -2,13 +2,15 @@
 A modern, modular Next.js web application that fetches and displays FHIR diagnostic lab reports using clean architecture, reusable components, and best practices.
 
 📁 Project Structure
+
+```bash
 .
 ├── components/         # Reusable UI components (Card, Breadcrumbs, etc.)
 ├── hooks/              # Custom React hooks (e.g. useFhirData)
 ├── layouts/            # Layout components (MainLayout)
 ├── pages/              # Next.js page routes
 ├── styles/             # Tailwind global styles
-├── package.json        # package to install dependencies
+├── package.json        # Package to install dependencies
 ├── Dockerfile          # Docker setup
 ├── .env.local          # Environment variables (not committed)
 └── README.md

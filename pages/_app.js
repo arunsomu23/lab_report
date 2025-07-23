@@ -1,23 +1,28 @@
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import "@/styles/globals.css";
-
-const PROTECTED_ROUTES = ["/", "/lab", "/lab/details"];
+import { FhirDataProvider } from "@/context/FhirDataContext";
 
 export default function App({ Component, pageProps }) {
   const router = useRouter();
 
   useEffect(() => {
     const token = sessionStorage.getItem("authToken");
+    const requiresAuth = Component.authRequired !== false;
 
-    const isProtected = PROTECTED_ROUTES.some((route) =>
-      router.pathname.startsWith(route)
-    );
-
-    if (!token && isProtected) {
+    if (requiresAuth && !token) {
       router.replace("/login");
     }
-  }, [router.pathname]);
+  }, [Component, router.pathname]);
 
-  return <Component {...pageProps} />;
-}
+  const isFhirRoute = router.pathname.startsWith("/lab");
+  const Page = (
+    <Component {...pageProps} />
+  );
+
+  return isFhirRoute ? (
+    <FhirDataProvider>{Page}</FhirDataProvider>
+  ) : (
+    Page
+  );
+};

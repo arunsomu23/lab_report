@@ -1,27 +1,42 @@
+import { useEffect } from "react";
 import { useRouter } from "next/router";
 import MainLayout from "@/layouts/MainLayout";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import Resource from "@/components/Resource";
+import ValidationErrors from "@/components/ValidationErrors";
+import { useFhirContext } from "@/context/FhirDataContext";
 import useFhirData from "@/hooks/useFhirData";
 
 export default function LabTypePage() {
-  const { report, loading, errors } = useFhirData();
   const router = useRouter();
+  const { report, setFhirData } = useFhirContext();
+  const {
+    report: fetchedReport,
+    observations,
+    loading: dataLoading,
+    errors: fetchErrors,
+  } = useFhirData();
 
-  if (loading) return <p className="p-4">Loading FHIR data...</p>;
+  useEffect(() => {
+    if (fetchedReport && observations?.length) {
+      setFhirData({ report: fetchedReport, observations });
+    }
+  }, [fetchedReport, observations, setFhirData]);
 
-  if (errors.length > 0) {
+  if (fetchErrors?.length > 0) {
+    setFhirData({ errors: fetchErrors });
     return (
-      <div className="p-4">
-        <h2 className="text-lg font-semibold text-red-600">
-          Validation Errors
-        </h2>
-        <ul className="list-disc ml-6 mt-2 text-sm text-gray-700">
-          {errors.map((msg, idx) => (
-            <li key={idx}>{msg.message}</li>
-          ))}
-        </ul>
-      </div>
+      <MainLayout>
+        <ValidationErrors errors={fetchErrors} />
+      </MainLayout>
+    );
+  }
+
+  if (dataLoading || !report) {
+    return (
+      <MainLayout>
+        <p className="p-4 font-semibold">Loading FHIR data...</p>
+      </MainLayout>
     );
   }
 

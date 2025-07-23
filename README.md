@@ -49,6 +49,8 @@ password : admin123
 🐳 Docker
 docker run -p 3000:3000 arun2305/lab-report
 
+⬆️ Deployed on https://labreportdemo.netlify.app
+
 🧩 Technologies Used
 - Next.js – React framework
 - Tailwind CSS – Utility-first CSS framework

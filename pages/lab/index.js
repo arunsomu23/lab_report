@@ -4,35 +4,21 @@ import MainLayout from "@/layouts/MainLayout";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import Resource from "@/components/Resource";
 import ValidationErrors from "@/components/ValidationErrors";
-import { useFhirContext } from "@/context/FhirDataContext";
 import useFhirData from "@/hooks/useFhirData";
 
 export default function LabTypePage() {
   const router = useRouter();
-  const { report, setFhirData } = useFhirContext();
-  const {
-    report: fetchedReport,
-    observations,
-    loading: dataLoading,
-    errors: fetchErrors,
-  } = useFhirData();
+  const { report, loading, errors } = useFhirData();
 
-  useEffect(() => {
-    if (fetchedReport && observations?.length) {
-      setFhirData({ report: fetchedReport, observations });
-    }
-  }, [fetchedReport, observations, setFhirData]);
-
-  if (fetchErrors?.length > 0) {
-    setFhirData({ errors: fetchErrors });
+  if (errors?.length > 0) {
     return (
       <MainLayout>
-        <ValidationErrors errors={fetchErrors} />
+        <ValidationErrors errors={errors} />
       </MainLayout>
     );
   }
 
-  if (dataLoading || !report) {
+  if (loading || !report) {
     return (
       <MainLayout>
         <p className="p-4 font-semibold">Loading FHIR data...</p>

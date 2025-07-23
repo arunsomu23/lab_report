@@ -3,10 +3,10 @@ import MainLayout from "@/layouts/MainLayout";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import ResourceDetails from "@/components/ResourceDetails";
 import ValidationErrors from "@/components/ValidationErrors";
-import { useFhirContext } from "@/context/FhirDataContext";
+import useFhirData from "@/hooks/useFhirData";
 
 export default function LabDetailsPage() {
-  const { report, observations, loading, errors } = useFhirContext();
+  const { report, observations, loading, errors } = useFhirData();
   const router = useRouter();
 
   if (errors?.length > 0) {

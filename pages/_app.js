@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import "@/styles/globals.css";
-import { FhirDataProvider } from "@/context/FhirDataContext";
 
 export default function App({ Component, pageProps }) {
   const router = useRouter();
@@ -15,14 +14,5 @@ export default function App({ Component, pageProps }) {
     }
   }, [Component, router.pathname]);
 
-  const isFhirRoute = router.pathname.startsWith("/lab");
-  const Page = (
-    <Component {...pageProps} />
-  );
-
-  return isFhirRoute ? (
-    <FhirDataProvider>{Page}</FhirDataProvider>
-  ) : (
-    Page
-  );
+  return <Component {...pageProps} />
 };

@@ -1,14 +1,13 @@
-import { useEffect } from "react";
 import { useRouter } from "next/router";
 import MainLayout from "@/layouts/MainLayout";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import Resource from "@/components/Resource";
 import ValidationErrors from "@/components/ValidationErrors";
-import useFhirData from "@/hooks/useFhirData";
+import { useFhirContext } from "@/context/FhirDataContext";
 
 export default function LabTypePage() {
   const router = useRouter();
-  const { report, loading, errors } = useFhirData();
+  const { report, loading, errors } = useFhirContext();
 
   if (errors?.length > 0) {
     return (
